@@ -1,0 +1,9 @@
+GET http://localhost:5000/produtos/ HTTP/1.1
+
+###
+
+GET https://source.unsplash.com/1600x900/?nature,water HTTP/1.1
+
+###
+
+GET https://source.unsplash.com/random HTTP/1.1
