@@ -1,23 +1,58 @@
 package com.example;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @RestController
 public class ProductResource {
-  private Product produto;
-
+  private List<Product> produtos;
+  /*
+   * Construtor do ProductResource, preparando uma lista de produtos
+   */
   public ProductResource() {
-    this.produto = new Product();
-    produto.setValor(25.00);
+    this.produtos = new ArrayList<>();
+    this.produtos.add(new Product("cao", 50.00, 5));
+    this.produtos.add(new Product("gato", 30.00, 7));
   }
 
-  @RequestMapping(value = "/produtos", 
-  method = RequestMethod.GET)
-  public Product buscarProdutos() {
-    return produto;
-    // return "Greetings from Spring Boot!";
+  /**
+   * Metodo de requisicao do tipo GET, para uma lista
+   * @param raca tipo de raca para filtrar
+   * @return lista de produtos, filtrados ou nao
+   */
+  @RequestMapping(value = "/produtos/", method = RequestMethod.GET)
+  public List<Product> buscarProdutos(@RequestParam(required = false) String raca) {
+    if(raca == null) {
+      return this.produtos;
+    } else {
+      List<Product> prod = new ArrayList<>();
+      for(Product p: this.produtos) {
+        if(raca.equals(p.getRaca())) prod.add(p);
+      }
+      return prod;
+    }
+  }
+
+  /**
+   * Metodo de requisicao do tipo GET, para um item
+   * @param id identificador ou indice da colecao dos produtos
+   * @return item de produto unico
+   */
+  @RequestMapping(value = "/produtos/{id}", method = RequestMethod.GET)
+  public Product buscarProduto(@PathVariable Integer id) {
+    return this.produtos.get(id - 1);
+  }
+
+  @RequestMapping(value = "/produtos/{id}", 
+  method = RequestMethod.DELETE)
+  public void removerProduto(@PathVariable Integer id) {
+    this.produtos.remove(id - 1);
   }
 
 }

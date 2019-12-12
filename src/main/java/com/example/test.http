@@ -2,6 +2,18 @@ GET http://localhost:5000/produtos/ HTTP/1.1
 
 ###
 
+GET http://localhost:5000/produtos/?raca=cao HTTP/1.1
+
+###
+
+GET http://localhost:5000/produtos/2/ HTTP/1.1
+
+###
+
+DELETE http://localhost:5000/produtos/2/ HTTP/1.1
+
+###
+
 GET https://source.unsplash.com/1600x900/?nature,water HTTP/1.1
 
 ###

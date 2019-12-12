@@ -1,12 +1,29 @@
 package com.example;
 
 public class Product {
+    private String raca;
     private double valor;
     private int quantidade;
-    public Product() {
-        this.valor = 0.00;
-        this.quantidade = 0;
+    public Product(String raca, 
+    double valor, int quantidade) {
+        this.raca = raca;
+        this.valor = valor;
+        this.quantidade = quantidade;
     }
+
+    /**
+     * @return the raca
+     */
+    public String getRaca() {
+        return this.raca;
+    }
+    /**
+     * @param raca the raca to set
+     */
+    public void setRaca(String raca) {
+        this.raca = raca;
+    }
+
     public double getValor() {
         return this.valor;
     }
