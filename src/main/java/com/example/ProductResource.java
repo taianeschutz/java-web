@@ -54,5 +54,33 @@ public class ProductResource {
   public void removerProduto(@PathVariable Integer id) {
     this.produtos.remove(id - 1);
   }
+  
+  /**
+   * Metodo de requisicao do tipo DELETE, para remover um item
+   * @param id identificador ou indice da colecao dos produtos
+   */
+  @RequestMapping(value = "/produtos/{id}", method = RequestMethod.DELETE)
+  public void removerProduto(@PathVariable Integer id) {
+    this.produtos.remove(id - 1);
+  }
+
+  @RequestMapping(value = "/produtos/", 
+  method = RequestMethod.POST)
+  public Product criarProduto(@RequestBody Product product) {
+    String raca = product.getRaca();
+    double valor = product.getValor();
+    int quantidade = product.getQuantidade();
+    return new Product(raca, valor, quantidade);
+  }
+
+  @RequestMapping(value="/produtos/{id}", 
+  method=RequestMethod.PUT)
+  public void requestMethodName(@PathVariable Integer id,
+  @RequestBody Product produtoParam) {
+      Product produto = this.produtos.get(id - 1);
+      produto.setQuantidade(produtoParam.getQuantidade());
+      produto.setValor(produtoParam.getValor());
+      produto.setRaca(produtoParam.getRaca());
+  }
 
 }
