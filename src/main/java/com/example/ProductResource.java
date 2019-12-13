@@ -3,6 +3,7 @@ package com.example;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -47,12 +48,6 @@ public class ProductResource {
   @RequestMapping(value = "/produtos/{id}", method = RequestMethod.GET)
   public Product buscarProduto(@PathVariable Integer id) {
     return this.produtos.get(id - 1);
-  }
-
-  @RequestMapping(value = "/produtos/{id}", 
-  method = RequestMethod.DELETE)
-  public void removerProduto(@PathVariable Integer id) {
-    this.produtos.remove(id - 1);
   }
   
   /**

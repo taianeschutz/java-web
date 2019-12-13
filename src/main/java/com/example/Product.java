@@ -30,7 +30,7 @@ public class Product {
     public void setValor(double valor) {
         this.valor = valor;
     }
-    public double getQuantidade() {
+    public int getQuantidade() {
         return this.quantidade;
     }
     public void setQuantidade(int quantidade) {
