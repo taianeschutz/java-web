@@ -19,3 +19,25 @@ GET https://source.unsplash.com/1600x900/?nature,water HTTP/1.1
 ###
 
 GET https://source.unsplash.com/random HTTP/1.1
+
+###
+
+POST http://localhost:5000/produtos/
+Content-Type application/json; charset=UTF-8
+
+{
+  "raca": "ave",
+  "valor": "70.00",
+  "quantidade": 5
+}
+
+###
+
+POST http://localhost:5000/produtos/1/
+Content-Type application/json; charset=UTF-8
+
+{
+  "raca": "ave",
+  "valor": "70.00",
+  "quantidade": 5
+}
