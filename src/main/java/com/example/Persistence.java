@@ -1,8 +1,9 @@
 package com.example;
 
-import java.beans.Statement;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.sql.Statement;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -35,7 +36,7 @@ public String populateDatabase() throws Exception {
     BufferedReader reader = new BufferedReader(file);
     StringBuilder str = new StringBuilder();
     String line = reader.readLine();
-    While (line != null) {
+    while (line != null) {
         str.append(line);
         line = reader.readLine();
     }
@@ -48,7 +49,7 @@ public String populateDatabase() throws Exception {
     public String testConnection() throws SQLException {
         StringBuilder str = new StringBuilder();
         Statement stmt = this.conn.createStatement();
-        ResultSet result = stmt.executeJava("SELECT * FROM JOGADOR");
+        ResultSet result = stmt.executeQuery("SELECT * FROM JOGADOR");
         while(result.next()) {
             str.append(result.getString("Nome") + "\n");
             str.append(result.getString("Idade") + "\n");
