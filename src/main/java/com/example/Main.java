@@ -21,6 +21,7 @@ package com.example;
 // import org.springframework.beans.factory.annotation.Autowired;
 // import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 // import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Controller;
@@ -36,13 +37,9 @@ import java.util.Map;*/
 
 @Controller
 @SpringBootApplication
+@EnableAutoConfiguration
+@EnablejpaRepositories
 public class Main {
-
-  /*@Value("${spring.datasource.url}")
-  private String dbUrl;*/
-
-  /*@Autowired
-  private DataSource dataSource;*/
 
   public static void main(String[] args) throws Exception {
     SpringApplication.run(Main.class, args);
