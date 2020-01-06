@@ -10,7 +10,7 @@ GET http://localhost:5000/produtos/2/ HTTP/1.1
 
 ###
 
-DELETE http://localhost:5000/produtos/2/ HTTP/1.1
+DELETE http://localhost:5000/usuarios/1/ HTTP/1.1
 
 ###
 
@@ -22,18 +22,18 @@ GET https://source.unsplash.com/random HTTP/1.1
 
 ###
 
-POST http://localhost:5000/produtos/ HTTP/1.1
+POST http://localhost:5000/usuarios/ HTTP/1.1
 Content-Type: application/json; charset=UTF-8
 
 {
-  "raca": "ave",
-  "valor": "70.00",
-  "quantidade": 5
+  "nome": "alessandro Goncalves",
+  "email": "ale",
+  "senha": "12345"
 }
 
 ###
 
-POST http://localhost:5000/produtos/1/ HTTP/1.1
+POST http://localhost:5000/produtos/ HTTP/1.1
 Content-Type: application/json; charset=UTF-8
 
 {
