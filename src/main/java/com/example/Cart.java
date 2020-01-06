@@ -1,11 +1,9 @@
 package com.example;
 
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 
@@ -16,9 +14,10 @@ public class Cart {
     @GeneratedValue(strategy=GenerationType.AUTO)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "id_product", nullable = false)        
-    private Product produto;
+    @ManyToOne
+    private Product product;
+    @ManyToOne
+    private User user;
 
     private double precoUnitario;
     private int quantidade;
@@ -27,10 +26,12 @@ public class Cart {
 
     protected Cart() {}
 
-    public Cart(final double precoUnitario, final int quantidade) {
+    public Cart(double precoUnitario, int quantidade, Product produto, User cliente) {
         this.precoUnitario = precoUnitario;
         this.quantidade = quantidade;
         this.precoTotal = precoUnitario * quantidade;
+        this.product = produto;
+        this.user = cliente;
     }    
 
     public double getPrecoUnitario() {
@@ -57,7 +58,18 @@ public class Cart {
         this.precoTotal = precoTotal;
     }
 
-	public Product getProduto() {
-		return null;
-	}
+    /**
+     * @return the user
+     */
+    public User getUser() {
+        return user;
+    }
+
+    /**
+     * @return the product
+     */
+    public Product getProduct() {
+        return product;
+    }
+
 }

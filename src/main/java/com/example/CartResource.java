@@ -18,6 +18,11 @@ public class CartResource {
     public CartResource(final CartRepository repository) {
         this.repository = repository;
     }
+    @RequestMapping(value = "/carrinho/comprar/", method = RequestMethod.POST)
+    public String comprar(@RequestParam(required = false) final String produtos) {
+        this.repository.deleteAll();
+        return "Ok!";
+    }
 
     @RequestMapping(value = "/carrinho/", method = RequestMethod.GET)
     public Iterable<Cart> buscar(@RequestParam(required = false) final String produtos) {
@@ -27,23 +32,24 @@ public class CartResource {
    
     @RequestMapping(value = "/carrinho/", method = RequestMethod.POST)
     public Cart criar(@RequestBody final Cart cart) {
-        final double precoUnitario = cart.getPrecoUnitario();
-        final int quantidade = quantidade.getQuantidade();
-        final double precoTotal = precoTotal.getPrecoTotal();
-        final Product produto = cart.getProduto();
-
-        return this.repository.save(new Cart());
+        double precoUnitario = cart.getPrecoUnitario();
+        int quantidade = cart.getQuantidade();
+        Product produto = cart.getProduct();
+        User cliente = cart.getUser();
+        return this.repository.save(new Cart(precoUnitario, quantidade, produto, cliente));
     }
 
-/*
-    @RequestMapping(value = "/usuarios/{id}", method = RequestMethod.PUT)
-    public void alterar(@PathVariable Long id, @RequestBody User usuarioParam) {
-        User usuario = this.repository.findById(id).get();
+    @RequestMapping(value = "/carrinho/", method = RequestMethod.PUT)
+    public void alterar(@PathVariable Long id, @RequestBody Cart carrinhoParam) {
+        Cart carrinho = this.repository.findById(id).get();
+        carrinho.setPrecoUnitario(carrinhoParam.getPrecoUnitario());
+        carrinho.setQuantidade(carrinhoParam.getQuantidade());
+        this.repository.save(carrinho);
     }
 
-    @RequestMapping(value = "/usuarios/{id}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/carrinho/", method = RequestMethod.DELETE)
     public void remover(@PathVariable Long id) {
         this.repository.deleteById(id);
     }
-*/
+
 }
