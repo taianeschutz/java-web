@@ -4,7 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 
 
 
@@ -14,9 +14,9 @@ public class Cart {
     @GeneratedValue(strategy=GenerationType.AUTO)
     private Long id;
 
-    @ManyToOne
+    @OneToOne(optional = false)
     private Product product;
-    @ManyToOne
+    @OneToOne(optional = false)
     private User user;
 
     private double precoUnitario;
@@ -34,6 +34,17 @@ public class Cart {
         this.user = cliente;
     }    
 
+    @Override
+    public String toString() {
+      return String.format(
+          "[id=%d, customer='%s', product='%s']",
+          id,precoUnitario, quantidade, user, product);
+    }
+
+    public Long getId() {
+        return id;
+    }
+    
     public double getPrecoUnitario() {
         return this.precoUnitario;
     }
@@ -71,5 +82,13 @@ public class Cart {
     public Product getProduct() {
         return product;
     }
+
+	public void setProduct(Product product) {
+        this.product = product;
+    }
+
+	public void setUser(User user) {
+        this.user = user;
+	}
 
 }

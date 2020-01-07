@@ -1,5 +1,8 @@
 package com.example;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -12,16 +15,24 @@ import org.springframework.web.bind.annotation.RestController;
 public class CartResource {
 
     @Autowired
-    private final CartRepository repository;
+    private CartRepository repository;
+
+    @Autowired
+    private ProductRepository products;
+
+    @Autowired
+    private UserRepository users;
 
 
     public CartResource(final CartRepository repository) {
         this.repository = repository;
     }
-    @RequestMapping(value = "/carrinho/comprar/", method = RequestMethod.POST)
-    public String comprar(@RequestParam(required = false) final String produtos) {
-        this.repository.deleteAll();
-        return "Ok!";
+    @RequestMapping(value = "/carrinho/comprar/",  method=RequestMethod.POST)
+    public Map<String,String> finalizarCarrinho() {
+      this.repository.deleteAll();
+      Map<String,String> res = new HashMap<>();
+      res.put("Mensagem", "Compra finalizada");
+      return res;
     }
 
     @RequestMapping(value = "/carrinho/", method = RequestMethod.GET)
@@ -31,19 +42,19 @@ public class CartResource {
 
    
     @RequestMapping(value = "/carrinho/", method = RequestMethod.POST)
-    public Cart criar(@RequestBody final Cart cart) {
-        double precoUnitario = cart.getPrecoUnitario();
-        int quantidade = cart.getQuantidade();
-        Product produto = cart.getProduct();
-        User cliente = cart.getUser();
-        return this.repository.save(new Cart(precoUnitario, quantidade, produto, cliente));
+    public Cart criar(@RequestBody Cart cart) {
+        Product product = this.products.findById(cart.getProduct().getId()).get();
+        double preco = product.getValor();
+        int quantidade = product.getQuantidade();
+        User user = this.users.findById(cart.getUser().getId()).get();
+        return this.repository.save(new Cart(preco, quantidade, product, user));
     }
 
-    @RequestMapping(value = "/carrinho/", method = RequestMethod.PUT)
-    public void alterar(@PathVariable Long id, @RequestBody Cart carrinhoParam) {
+    @RequestMapping(value = "/carrinho/{id}", method = RequestMethod.PUT)
+    public void alterar(@PathVariable Long id, @RequestBody Cart produtoParam) {
         Cart carrinho = this.repository.findById(id).get();
-        carrinho.setPrecoUnitario(carrinhoParam.getPrecoUnitario());
-        carrinho.setQuantidade(carrinhoParam.getQuantidade());
+        carrinho.setProduct(this.products.findById(produtoParam.getProduct().getId()).get());
+        carrinho.setUser(this.users.findById(produtoParam.getUser().getId()).get());
         this.repository.save(carrinho);
     }
 
